@@ -5,7 +5,7 @@ import Product from "./containers/Product";
 
 import "./App.css";
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Switch>
@@ -18,6 +18,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;

@@ -1,40 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import { useParams } from "react-router-dom";
+import ProductToUpdate from "../components/ProductToUpdate";
+import UpdateForm from "../components/UpdateForm";
 import Axios from "axios";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-    maxWidth: 1100,
-    backgroundColor: theme.palette.background.paper
-  },
-  margin: {
-    margin: theme.spacing(1)
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  }
-}));
-
 const Product = () => {
-  const classes = useStyles();
-  const history = useHistory();
-
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState();
@@ -111,119 +81,23 @@ const Product = () => {
       ) : (
         <div>
           <h1>{product.name}</h1>
-          <div className={classes.root}>
-            <List component="nav" aria-label="main mailbox folders">
-              <ListItem button key={product._id}>
-                <ListItemText primary={product.name} className="item-text" />
 
-                <ListItemText primary={product.type} className="item-text" />
+          <ProductToUpdate product={product} />
 
-                <ListItemText
-                  primary={product.price + " €"}
-                  className="item-text"
-                />
-
-                <ListItemText
-                  primary={
-                    product.available === false
-                      ? "rupture de stock"
-                      : "en stock"
-                  }
-                  className="item-text"
-                />
-
-                <ListItemText
-                  primary={"garanti " + product.warranty_years + " an(s)"}
-                  className="item-text"
-                />
-              </ListItem>
-            </List>
-          </div>
-
-          <div className={classes.margin}>
-            <Grid container spacing={1} alignItems="flex-end">
-              <Grid item></Grid>
-              <Grid item>
-                <TextField
-                  id="input-with-icon-grid"
-                  label="name"
-                  value={name}
-                  onChange={handleChangeName}
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  id="input-with-icon-grid"
-                  label="type"
-                  value={type}
-                  onChange={handleChangeType}
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  type="number"
-                  id="input-with-icon-grid"
-                  label="price"
-                  value={price}
-                  onChange={handleChangePrice}
-                />
-              </Grid>
-
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">available</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  placeholder="available"
-                  value={available}
-                  onChange={handleChangeAvailable}
-                >
-                  <MenuItem value="en stock">en stock</MenuItem>
-                  <MenuItem value="rupture de stock">rupture de stock</MenuItem>
-                </Select>
-              </FormControl>
-
-              <Grid item>
-                <TextField
-                  type="number"
-                  id="input-with-icon-grid"
-                  label="warranty"
-                  value={warranty}
-                  onChange={handleChangeWarranty}
-                />
-              </Grid>
-              <Button
-                variant="contained"
-                onClick={event => {
-                  event.preventDefault();
-                  if (
-                    name !== "" &&
-                    type !== "" &&
-                    price !== null &&
-                    warranty !== null
-                  ) {
-                    updateProduct();
-                    handleChangeForm();
-                  } else {
-                    alert(
-                      "Vous devez renseigner tous les champs pour ajouter un produit."
-                    );
-                  }
-                }}
-              >
-                Modifier
-              </Button>
-
-              <Button
-                color="secondary"
-                onClick={() => {
-                  history.goBack();
-                }}
-              >
-                Retour
-              </Button>
-            </Grid>
-          </div>
+          <UpdateForm
+            handleChangeName={handleChangeName}
+            handleChangeAvailable={handleChangeAvailable}
+            handleChangeForm={handleChangeForm}
+            handleChangePrice={handleChangePrice}
+            handleChangeType={handleChangeType}
+            handleChangeWarranty={handleChangeWarranty}
+            name={name}
+            type={type}
+            price={price}
+            available={available}
+            warranty={warranty}
+            updateProduct={updateProduct}
+          />
         </div>
       )}
     </div>

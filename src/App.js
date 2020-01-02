@@ -1,12 +1,12 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/Home";
 import Product from "./containers/Product";
-
 import "./App.css";
 
 const App = () => {
   return (
+    // NAVIGATION
     <Router>
       <Switch>
         <Route path="/product/:id">

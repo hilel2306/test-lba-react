@@ -1,6 +1,5 @@
 import React from "react";
-import BackButton from "../components/BackButton";
-import UpdateButton from "../components/UpdateButton";
+import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -10,6 +9,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: "100%",
+    maxWidth: 1100,
+    backgroundColor: theme.palette.background.paper
+  },
   margin: {
     margin: theme.spacing(1)
   },
@@ -19,12 +23,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UpdateForm = ({
-  input,
-  handleChange,
-  updateProduct,
-  handleChangeForm
-}) => {
+const AddForm = ({ handleChangeForm, handleChange, input, addProduct }) => {
   const classes = useStyles();
 
   const submit = () => {
@@ -35,10 +34,10 @@ const UpdateForm = ({
       input.available &&
       input.warranty
     ) {
-      updateProduct();
+      addProduct();
       handleChangeForm();
     } else {
-      alert("Vous devez renseigner tous les champs pour modifier le produit.");
+      alert("Vous devez renseigner tous les champs pour ajouter le produit.");
     }
   };
 
@@ -95,12 +94,18 @@ const UpdateForm = ({
             onChange={event => handleChange(event, "warranty")}
           />
         </Grid>
-        <UpdateButton submit={submit} />
 
-        <BackButton />
+        <Button
+          variant="contained"
+          onClick={() => {
+            submit();
+          }}
+        >
+          Ajouter
+        </Button>
       </Grid>
     </div>
   );
 };
 
-export default UpdateForm;
+export default AddForm;

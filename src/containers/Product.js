@@ -4,12 +4,16 @@ import ProductToUpdate from "../components/ProductToUpdate";
 import UpdateForm from "../components/UpdateForm";
 import Axios from "axios";
 
-const Product = () => {
+const Product = ({
+  handleChange,
+  handleChangeForm,
+  input,
+  updated,
+  setUpdated
+}) => {
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(true); // Loading state to drive the Product page's render
-  const [input, setInput] = useState({}); // To create object to send to the database
   const [product, setProduct] = useState(); // State to store the result from fetchData function
-  const [updated, setUpdated] = useState(false); // State to start UseEffect when there is a modification
+  const [isLoading, setIsLoading] = useState(true); // Loading state to drive the Home page's render
 
   // Get the product selected
   const fetchData = async () => {
@@ -35,20 +39,6 @@ const Product = () => {
     } catch (e) {
       alert("An error occurred");
     }
-  };
-
-  // To back to square one Input
-  const handleChangeForm = () => {
-    let newObj = { ...input };
-    newObj = {};
-    setInput(newObj);
-  };
-
-  // To update Input
-  const handleChange = (event, key) => {
-    const newObj = { ...input };
-    newObj[key] = event.target.value;
-    setInput(newObj);
   };
 
   useEffect(() => {

@@ -13,11 +13,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Home = () => {
-  const [isLoading, setIsLoading] = useState(true); // Loading state to drive the Home page's render
+const Home = ({
+  handleChange,
+  handleChangeForm,
+  input,
+  isLoading,
+  setIsLoading,
+  updated,
+  setUpdated
+}) => {
   const [products, setProducts] = useState([]); // State to store the result from fetchData function
-  const [updated, setUpdated] = useState(false); // State to start UseEffect when there is a modification
-  const [input, setInput] = useState({}); // To create object to send to the database
 
   // To use style defined is useStyles from Material UI
   const classes = useStyles();
@@ -46,20 +51,6 @@ const Home = () => {
     } catch (e) {
       alert("An error occurred");
     }
-  };
-
-  // To back to square one Input
-  const handleChangeForm = () => {
-    let newObj = { ...input };
-    newObj = {};
-    setInput(newObj);
-  };
-
-  // To update Input
-  const handleChange = (event, key) => {
-    const newObj = { ...input };
-    newObj[key] = event.target.value;
-    setInput(newObj);
   };
 
   // To get the database render
